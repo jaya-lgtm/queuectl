@@ -332,13 +332,9 @@ shutdown_requested
 
 is enabled.
 
-3. A best-effort
-
-```javascript
-process.kill(pid, "SIGINT")
-```
-
-is attempted.
+3. Platform-specific signaling:
+   - **Linux/Unix**: A best-effort `process.kill(pid, "SIGINT")` is attempted to trigger the process's handler.
+   - **Windows**: `process.kill(pid, "SIGINT")` is skipped. Node's signal emulation on Windows terminates processes immediately, which would force-kill in-flight jobs. Instead, workers on Windows rely on database status polling to exit gracefully.
 
 4. Workers poll the database every heartbeat and every polling iteration.
 
