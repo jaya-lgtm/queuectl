@@ -17,7 +17,6 @@ let heartbeatInterval = null;
 function gracefulExit() {
   if (isShuttingDown) return;
   isShuttingDown = true;
-  clearInterval(heartbeatInterval);
   
   if (currentJob) {
     console.log(`[Worker ${workerId}] Shutdown requested. Finishing current job: ${currentJob.id}...`);
