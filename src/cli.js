@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { Command } = require("commander");
 const initializeDatabase = require("./database/schema");
 const enqueue = require("./commands/enqueue");
