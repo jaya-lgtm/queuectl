@@ -22,7 +22,9 @@ function startWorkers(options = {}) {
 
     for (const child of children) {
       try {
-        child.kill("SIGTERM");
+        if (process.platform !== "win32") {
+          child.kill("SIGTERM");
+        }
       } catch (err) {}
     }
   }
@@ -63,7 +65,9 @@ function stopWorkers() {
     try {
       updateWorkerStatus(worker.id, "stopping");
       console.log(`Signaling worker ${worker.id} (PID ${worker.pid}) to stop`);
-      process.kill(worker.pid, "SIGINT");
+      if (process.platform !== "win32") {
+        process.kill(worker.pid, "SIGINT");
+      }
     } catch (err) {}
   }
 
